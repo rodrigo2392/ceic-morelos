@@ -198,10 +198,11 @@ export function initCinematic() {
       },
       { once: true }
     );
-    // si el códec falla (.mov en Chrome/Firefox) → póster + revelar
+    // si el códec falla DE VERDAD (ninguna fuente reproducible) → póster + revelar.
+    // Solo escuchamos el 'error' del <video> (todas las fuentes fallaron). NO el de
+    // cada <source>: en iOS el <source> webm siempre falla (no soporta webm) y el
+    // navegador pasa al mp4; escuchar ese error mataría el video aunque el mp4 sirva.
     vid.addEventListener('error', failReveal, { once: true });
-    const src = vid.querySelector('source');
-    if (src) src.addEventListener('error', failReveal, { once: true });
 
     // reproducir una sola vez, desde el inicio
     try {
@@ -293,7 +294,16 @@ export function initCinematic() {
           audioBusy = false;
         });
     };
-    audioGestures.forEach((ev) => window.addEventListener(ev, engageAudio, { passive: true }));
+    // iOS solo permite desmutear un autoplay con un TAP real; intentarlo en el
+    // primer scroll/touch hace que iOS PAUSE el video, y luego el chequeo de
+    // progreso lo manda al póster (bug: el video arranca y a ~1s cae al fallback).
+    // En iOS el audio se activa SOLO con el botón de sonido (que sí es tap válido).
+    const isIOS =
+      /iP(hone|ad|od)/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!isIOS) {
+      audioGestures.forEach((ev) => window.addEventListener(ev, engageAudio, { passive: true }));
+    }
   }
 
   /* ---------- Intro / film leader (con bloqueo de scroll) ---------- */
