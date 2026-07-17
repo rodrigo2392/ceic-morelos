@@ -174,6 +174,7 @@ export function initCinematic() {
       return;
     }
     const poster = vid.getAttribute('poster');
+    let hasPlayed = false; // el video llegó a avanzar de verdad (currentTime subió)
     const fallback = () => {
       if (poster && vid.parentElement) {
         vid.parentElement.style.backgroundImage = `url("${poster}")`;
@@ -182,14 +183,34 @@ export function initCinematic() {
         vid.style.display = 'none';
       }
     };
-    // Si el video falla o no puede reproducirse, mostramos póster y revelamos
-    // igual (para NO dejar el scroll bloqueado).
+    // Póster SOLO cuando el video de verdad no puede reproducirse. Si ya reprodujo
+    // y luego se pausa (iOS), NO lo cambiamos por póster (ver el chequeo de abajo).
     const failReveal = () => {
       fallback();
       revealHeroText();
     };
 
-    // el texto aparece SOLO cuando el video termina
+    // iOS PAUSA un autoplay muteado por su cuenta (Modo Bajo Consumo, salir de
+    // vista o un stall de decodificación). Marcamos si el video avanzó y, si se
+    // pausa antes de terminar, reintentamos reproducir (best-effort) en vez de
+    // tirarlo al póster. El presupuesto de reintentos se reinicia cuando el video
+    // avanza, así un stall se recupera pero un bloqueo duro no hace churn infinito.
+    let lastT = 0;
+    let resumeTries = 0;
+    vid.addEventListener('timeupdate', () => {
+      if (vid.currentTime > 0.2) hasPlayed = true;
+      if (vid.currentTime > lastT + 0.5) {
+        lastT = vid.currentTime;
+        resumeTries = 0;
+      }
+    });
+    vid.addEventListener('pause', () => {
+      if (vid.ended || resumeTries >= 3) return;
+      resumeTries++;
+      vid.play().catch(() => {});
+    });
+
+    // el texto aparece cuando el video termina
     vid.addEventListener(
       'ended',
       () => {
@@ -198,31 +219,32 @@ export function initCinematic() {
       },
       { once: true }
     );
-    // si el códec falla DE VERDAD (ninguna fuente reproducible) → póster + revelar.
-    // Solo escuchamos el 'error' del <video> (todas las fuentes fallaron). NO el de
-    // cada <source>: en iOS el <source> webm siempre falla (no soporta webm) y el
-    // navegador pasa al mp4; escuchar ese error mataría el video aunque el mp4 sirva.
+    // error real (ninguna fuente reproducible) → póster + revelar. Solo el 'error'
+    // del <video>; NO el de cada <source> (en iOS el webm siempre falla y pasa al mp4).
     vid.addEventListener('error', failReveal, { once: true });
 
-    // reproducir una sola vez, desde el inicio
+    // reproducir desde el inicio
     try {
       vid.currentTime = 0;
     } catch {
       /* noop */
     }
-    const playbackStart = vid.currentTime;
     const p = vid.play();
-    // autoplay bloqueado / reproducción rechazada → póster + revelar
-    if (p && p.catch) p.catch(() => failReveal());
+    // autoplay rechazado Y el video nunca reprodujo → póster + revelar
+    if (p && p.catch)
+      p.catch(() => {
+        if (!hasPlayed) failReveal();
+      });
 
-    // Si a los ~3s el video no decodificó, o no está avanzando (autoplay
-    // bloqueado / stall), mostramos póster y revelamos para no bloquear scroll.
-    // En el caso normal (video reproduciéndose) currentTime ya avanzó y NO entra.
+    // A los ~3s: caemos al póster SOLO si el video NUNCA reprodujo (no decodificó
+    // o el autoplay se bloqueó del todo). Si ya reprodujo y ahora está pausado
+    // (iOS), NO lo cambiamos por póster: revelamos el texto para no bloquear el
+    // scroll y dejamos el video (el reintento de 'pause' puede reanudarlo).
     setTimeout(() => {
       if (heroShown) return;
-      const notDecoded = !vid.videoWidth;
-      const notProgressing = vid.paused || vid.currentTime <= playbackStart + 0.3;
-      if (notDecoded || notProgressing) failReveal();
+      const neverPlayed = !vid.videoWidth || !hasPlayed;
+      if (neverPlayed) failReveal();
+      else revealHeroText();
     }, 3000);
 
     // Red de seguridad ligada a la duración (por si 'ended' nunca llega).
