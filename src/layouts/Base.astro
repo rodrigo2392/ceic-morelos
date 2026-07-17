@@ -1,0 +1,104 @@
+---
+/**
+ * Layout base del sitio. Provee el <head> (meta, fuentes, SEO) y envuelve
+ * el contenido de cada página. El diseño real se compondrá dentro del <slot/>.
+ */
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'CEIC — Centro de Estudios e Investigación Cinematográfica',
+  description = 'Escuela de cine y casa productora en Cuernavaca, Morelos. Cursos, diplomados y producción cinematográfica con maestros premiados.',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og-image.jpg', Astro.site);
+
+/**
+ * Datos estructurados para buscadores (Google Business / búsquedas locales
+ * tipo "escuela de cine Cuernavaca"). Solo hechos verificables del sitio real.
+ */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: site.name,
+  alternateName: site.shortName,
+  description,
+  url: Astro.site?.href,
+  logo: new URL('/favicon.png', Astro.site).href,
+  image: ogImage.href,
+  telephone: site.whatsapp.display,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Cuauhtemotzín #25',
+    addressLocality: 'Cuernavaca',
+    addressRegion: 'Morelos',
+    postalCode: '62000',
+    addressCountry: 'MX',
+  },
+  areaServed: 'Cuernavaca, Morelos, México',
+  sameAs: [site.instagram.link, site.facebook.link],
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0d0c0b" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CEIC" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Centro de Estudios e Investigación Cinematográfica" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Centro de Estudios e Investigación Cinematográfica" />
+
+    <!-- Fuentes del diseño: Bodoni Moda (display serif), Archivo (sans), Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,500;1,6..96,600;1,6..96,700&family=Archivo:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+    {/* Aplica el modo B/N antes del primer pintado para evitar el flash a color */}
+    <script is:inline>
+      try {
+        if (localStorage.getItem('ceic-bw') === '1') {
+          document.documentElement.classList.add('ceic-bw');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

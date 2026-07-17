@@ -1,0 +1,20 @@
+---
+/**
+ * Barra inferior fija. Junto con el nav forma el encuadre letterbox
+ * (cinemascope) que enmarca toda la página, continuando el del hero.
+ * Al llegar al final se funde con el footer real (ver runtime).
+ */
+import { site } from '../../data/site';
+---
+
+<div id="ceic-bottombar" class="ceic-bottombar">
+  <span class="ceic-bb-tag" id="ceic-bb-tag">CEIC · Cuernavaca, Morelos</span>
+  <span class="ceic-bb-tc" id="ceic-bb-tc" aria-hidden="true">00:00:00:00</span>
+  <nav class="ceic-bb-links" aria-label="Contacto rápido">
+    <a href={site.whatsapp.link} target="_blank" rel="noopener" class="ceic-bb-phone">{site.whatsapp.display}</a>
+    <span class="ceic-bb-sep ceic-bb-sep-phone" aria-hidden="true">·</span>
+    <a href={site.instagram.link} target="_blank" rel="noopener">Instagram</a>
+    <span class="ceic-bb-sep" aria-hidden="true">·</span>
+    <a href={site.facebook.link} target="_blank" rel="noopener">Facebook</a>
+  </nav>
+</div>

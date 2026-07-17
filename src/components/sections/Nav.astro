@@ -1,0 +1,43 @@
+---
+// Logo recortado (sin el espacio transparente del original).
+const LOGO = '/img/ceic-white-trim.png';
+---
+
+<nav id="ceic-nav" class="ceic-nav">
+  <a href="#hero" style="display:flex;align-items:center;color:#f4efe6">
+    <img src={LOGO} alt="CEIC" class="ceic-nav-logo" />
+  </a>
+  <div style="display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)">
+    <a href="#cursos" class="ceic-navlink" style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#f4efe6">Cursos</a>
+    <a href="#maestros" class="ceic-navlink" style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#f4efe6">Maestros</a>
+    <button
+      id="ceic-bw-toggle"
+      class="ceic-bw-toggle"
+      type="button"
+      aria-pressed="false"
+      title="Cambiar entre color y blanco y negro"
+    >
+      <span class="ceic-bw-dot" aria-hidden="true"></span>
+      <span class="ceic-bw-label">B/N</span>
+    </button>
+    <a
+      href="#contacto"
+      class="ceic-nav-cta"
+      style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.2em;text-transform:uppercase;color:#0d0c0b;background:#d8a24a;padding:11px 20px;border-radius:2px"
+      >Informes</a
+    >
+    <button
+      id="ceic-burger"
+      class="ceic-burger"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="ceic-menu"
+    >
+      <span class="ceic-burger-box" aria-hidden="true">
+        <span class="ceic-burger-line"></span>
+        <span class="ceic-burger-line"></span>
+      </span>
+    </button>
+  </div>
+</nav>

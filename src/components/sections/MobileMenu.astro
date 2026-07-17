@@ -1,0 +1,37 @@
+---
+/**
+ * Menú de navegación para móvil (≤720px), donde el nav no tiene sitio para los
+ * enlaces de sección.
+ *
+ * Va POR DEBAJO del nav (z-index 890 contra 900) y reserva --ceic-bar-h arriba:
+ * así la barra sigue encima, el botón hamburguesa nunca queda tapado y puede
+ * hacer de cerrar. Por eso el panel no lleva su propia X.
+ *
+ * El índice (01…08 + kicker) es el mismo que rotula cada sección: el menú es la
+ * tabla de contenidos de la película, no una lista aparte.
+ */
+const links = [
+  { id: 'somos', n: '01', t: 'Somos', k: 'La escuela' },
+  { id: 'cursos', n: '02', t: 'Cursos y diplomados', k: 'Programa' },
+  { id: 'maestros', n: '03', t: 'Maestros', k: 'El claustro' },
+  { id: 'portafolio', n: '04', t: 'Portafolio', k: 'En pantalla' },
+  { id: 'galeria', n: '05', t: 'Galería', k: 'Detrás de cámara' },
+  { id: 'servicios', n: '06', t: 'Servicios', k: 'Casa productora' },
+  { id: 'testimonios', n: '07', t: 'Testimonios', k: 'Egresados' },
+  { id: 'contacto', n: '08', t: 'Contacto', k: 'Solicita informes' },
+];
+---
+
+<div id="ceic-menu" class="ceic-menu" aria-hidden="true">
+  <nav class="ceic-menu-inner" aria-label="Menú principal">
+    {
+      links.map((l, i) => (
+        <a class="ceic-menu-link" href={`#${l.id}`} data-menu-link style={`--i:${i}`}>
+          <span class="ceic-menu-num">{l.n}</span>
+          <span class="ceic-menu-t">{l.t}</span>
+          <span class="ceic-menu-k">{l.k}</span>
+        </a>
+      ))
+    }
+  </nav>
+</div>

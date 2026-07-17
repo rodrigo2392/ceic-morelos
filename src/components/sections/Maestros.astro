@@ -1,0 +1,36 @@
+---
+import { maestros } from '../../data/maestros';
+const GRAIN =
+  "data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%222%22/></filter><rect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22/></svg>";
+const stripe =
+  'repeating-linear-gradient(135deg,#1a1714,#1a1714 8px,#141210 8px,#141210 16px)';
+---
+
+<section id="maestros" data-theme="dark" style="position:relative;background:#0d0c0b;padding:clamp(80px,12vh,150px) clamp(24px,7vw,110px);overflow:hidden">
+  <div style={`position:absolute;inset:0;opacity:.07;pointer-events:none;background-image:url('${GRAIN}');background-size:200px`}></div>
+  <div style="position:relative;z-index:2;max-width:1240px;margin:0 auto">
+    <div data-reveal style="display:flex;align-items:baseline;gap:20px;margin-bottom:18px">
+      <span style="font-family:'Bodoni Moda',serif;font-size:clamp(40px,6vw,84px);font-weight:400;color:rgba(244,239,230,.16);line-height:.8">03</span>
+      <span style="font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.22em;text-transform:uppercase;color:#d8a24a">El claustro</span>
+    </div>
+    <h2 data-reveal style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(32px,5vw,66px);line-height:1;margin:0 0 54px">Quienes te enseñan, <em style="color:#d8a24a">también estrenan</em></h2>
+    <div class="ceic-maestros" style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,26px)">
+      {
+        maestros.map((m, i) => (
+          <article data-reveal class="ceic-master" style="position:relative;cursor:pointer" data-bio-open={i} tabindex="0" role="button" aria-label={`Ver biografía de ${m.nombre}`}>
+            <div style={`position:relative;aspect-ratio:3/4;overflow:hidden;background:${stripe}`}>
+              <img src={m.img} alt={m.nombre} class="ceic-master-img" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.35) brightness(.85) sepia(.25);transition:filter .5s,transform .6s" />
+              <div data-fallback style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:15px;letter-spacing:.2em;color:rgba(244,239,230,.4)">RETRATO</div>
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(13,12,11,.9) 100%)"></div>
+              <div style="position:absolute;bottom:12px;left:12px;font-family:'Space Mono',monospace;font-size:13.5px;letter-spacing:.2em;color:rgba(244,239,230,.55)">{m.categoria}</div>
+            </div>
+            <h3 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(20px,1.7vw,25px);margin:18px 0 4px">{m.nombre}</h3>
+            <div style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.12em;color:#d8a24a;margin-bottom:10px">{m.rol}</div>
+            <p style="font-size:19px;line-height:1.55;color:rgba(244,239,230,.66);margin:0;font-weight:300">{m.lead}</p>
+            <span class="ceic-bio-cta">Ver biografía completa</span>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

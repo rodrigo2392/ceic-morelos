@@ -1,0 +1,41 @@
+---
+/**
+ * Drawer editorial lateral con la biografía completa de cada maestro.
+ * Se renderizan los 4 paneles (con datos reales) y el runtime muestra el que
+ * corresponda al abrirlo. Sin JSON ni construcción de DOM en el cliente.
+ */
+import { maestros } from '../../data/maestros';
+---
+
+<div id="ceic-drawer-scrim" class="ceic-scrim"></div>
+
+<aside
+  id="ceic-bio-drawer"
+  class="ceic-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Biografía del maestro"
+  aria-hidden="true"
+>
+  <button id="ceic-drawer-close" class="ceic-drawer-close" type="button" aria-label="Cerrar biografía">
+    CERRAR ✕
+  </button>
+
+  {
+    maestros.map((m, i) => (
+      <article class="ceic-drawer-panel" data-bio-panel={i} hidden>
+        <div class="ceic-drawer-media">
+          <img src={m.img} alt={m.nombre} loading="lazy" />
+        </div>
+        <span class="ceic-drawer-kicker">{m.categoria}</span>
+        <h3 class="ceic-drawer-name">{m.nombre}</h3>
+        <div class="ceic-drawer-rol">{m.rol}</div>
+        <div class="ceic-drawer-rule" />
+        <p class="ceic-drawer-lead">{m.lead}</p>
+        {m.resto.map((par) => (
+          <p class="ceic-drawer-p">{par}</p>
+        ))}
+      </article>
+    ))
+  }
+</aside>

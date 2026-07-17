@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/cinematic.css';
+
+import Nav from '../components/sections/Nav.astro';
+import MobileMenu from '../components/sections/MobileMenu.astro';
+import Overlays from '../components/sections/Overlays.astro';
+import BioDrawer from '../components/sections/BioDrawer.astro';
+import BottomBar from '../components/sections/BottomBar.astro';
+import Hero from '../components/sections/Hero.astro';
+import Somos from '../components/sections/Somos.astro';
+import Prestigio from '../components/sections/Prestigio.astro';
+import Cursos from '../components/sections/Cursos.astro';
+import Maestros from '../components/sections/Maestros.astro';
+import Portafolio from '../components/sections/Portafolio.astro';
+import Galeria from '../components/sections/Galeria.astro';
+import Servicios from '../components/sections/Servicios.astro';
+// import Testimonios from '../components/sections/Testimonios.astro'; // oculta hasta tener testimonios reales
+import Contacto from '../components/sections/Contacto.astro';
+---
+
+<Base>
+  <div id="ceic-root" style="position:relative;width:100%;background:#0d0c0b;font-family:'Archivo',sans-serif">
+    <Nav />
+    <MobileMenu />
+    <Overlays />
+    <Hero />
+    <Somos />
+    <Prestigio />
+    <Cursos />
+    <Maestros />
+    <Portafolio />
+    <Galeria />
+    <Servicios />
+    {/* <Testimonios /> — sección "Egresados" oculta hasta tener testimonios reales; descomentar (aquí y el import) para retomarla */}
+    <Contacto />
+    <BottomBar />
+    <BioDrawer />
+  </div>
+</Base>
+
+<script>
+  import { initCinematic } from '../scripts/cinematic';
+
+  const run = () => initCinematic();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run, { once: true });
+  } else {
+    run();
+  }
+</script>

@@ -1,0 +1,32 @@
+---
+import { portafolio } from '../../data/portafolio';
+const stripe =
+  'repeating-linear-gradient(135deg,#161311,#161311 8px,#0f0d0c 8px,#0f0d0c 16px)';
+---
+
+<section id="portafolio" data-theme="dark" style="position:relative;background:#0a0908;padding:clamp(80px,12vh,150px) clamp(24px,7vw,110px);overflow:hidden">
+  <div style="position:relative;z-index:2;max-width:1300px;margin:0 auto">
+    <div data-reveal style="display:flex;align-items:baseline;gap:20px;margin-bottom:18px">
+      <span style="font-family:'Bodoni Moda',serif;font-size:clamp(40px,6vw,84px);font-weight:400;color:rgba(244,239,230,.16);line-height:.8">04</span>
+      <span style="font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.22em;text-transform:uppercase;color:#d8a24a">En pantalla</span>
+    </div>
+    <h2 data-reveal style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(32px,5vw,66px);line-height:1;margin:0 0 54px">Portafolio</h2>
+    <div class="ceic-portfolio" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,28px)">
+      {
+        portafolio.map((p) => (
+          <div class="ceic-poster" data-title={p.titulo} data-reveal tabindex="0" style={`position:relative;aspect-ratio:2/3;overflow:hidden;cursor:pointer;background:${stripe};perspective:900px`}>
+            <img src={p.poster} alt={p.titulo} class="ceic-poster-img" style="width:100%;height:100%;object-fit:cover;filter:brightness(.8) contrast(1.16) saturate(.85) sepia(.12);transition:filter .5s,transform .5s" />
+            <div data-fallback style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:15px;color:rgba(244,239,230,.4)">PÓSTER</div>
+            <div class="ceic-poster-scan" style="position:absolute;inset:0;opacity:0;transition:opacity .4s;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18),rgba(0,0,0,.18) 1px,transparent 2px,transparent 3px);pointer-events:none"></div>
+            <div class="ceic-poster-info" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background:linear-gradient(180deg,transparent 40%,rgba(10,9,8,.92));opacity:0;transition:opacity .4s">
+              <h3 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:24px;margin:0 0 8px">{p.titulo}</h3>
+              <span style="font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.16em;color:#d8a24a">
+                {p.trailer ? '▶ VER TRÁILER' : '⤢ VER PÓSTER'}
+              </span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

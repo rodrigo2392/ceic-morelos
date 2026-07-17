@@ -1,0 +1,37 @@
+---
+const GRAIN =
+  "data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22/></filter><rect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22/></svg>";
+---
+
+<!-- ===== INTRO / FILM LEADER ===== -->
+<div
+  id="ceic-intro"
+  style="position:fixed;inset:0;z-index:9999;background:#0a0908;display:flex;align-items:center;justify-content:center;overflow:hidden"
+>
+  <div style={`position:absolute;inset:0;opacity:.5;background-image:url('${GRAIN}');background-size:180px;pointer-events:none;mix-blend-mode:overlay`}></div>
+  <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(216,162,74,.5)"></div>
+  <div style="position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(216,162,74,.5)"></div>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:230px;height:230px;border:1px solid rgba(216,162,74,.35);border-radius:50%"></div>
+  <div id="ceic-leadernum" style="font-family:'Bodoni Moda',serif;font-size:clamp(120px,26vw,340px);font-weight:500;color:#f4efe6;line-height:1;position:relative;z-index:2">3</div>
+  <div style="position:absolute;bottom:38px;left:0;right:0;text-align:center;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.5em;color:rgba(216,162,74,.75);text-transform:uppercase">CEIC · Cuernavaca · Est. Morelos</div>
+  <div style="position:absolute;top:32px;left:34px;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.3em;color:rgba(244,239,230,.4)">REEL 01</div>
+  <div id="ceic-leadertc" style="position:absolute;top:32px;right:34px;font-family:'Space Mono',monospace;font-size:16px;letter-spacing:.2em;color:rgba(244,239,230,.4)">00:00:03:00</div>
+</div>
+
+
+<!-- ===== GRADO NOIR SIEMPRE ACTIVO: grano estático + viñeta sobre todo el sitio ===== -->
+<div class="ceic-cinegrade" aria-hidden="true" style={`--ceic-grain:url('${GRAIN}')`}></div>
+
+<!-- ===== CAPA DE PELÍCULA (solo en modo B/N): grano + viñeta ===== -->
+<div class="ceic-film" aria-hidden="true" style={`--ceic-grain:url('${GRAIN}')`}></div>
+
+<!-- ===== LIGHTBOX (galería + pósters) ===== -->
+<div id="ceic-modal" class="ceic-lb" role="dialog" aria-modal="true" aria-label="Visor de imagen">
+  <div class="ceic-lb-grain" style={`background-image:url('${GRAIN}')`}></div>
+  <button id="ceic-lb-prev" class="ceic-lb-nav ceic-lb-prev" type="button" aria-label="Imagen anterior">‹</button>
+  <img id="ceic-modalimg" class="ceic-lb-img" alt="" />
+  <button id="ceic-lb-next" class="ceic-lb-nav ceic-lb-next" type="button" aria-label="Imagen siguiente">›</button>
+  <div id="ceic-modaltitle" class="ceic-lb-title"></div>
+  <div id="ceic-lb-count" class="ceic-lb-count"></div>
+  <button id="ceic-lb-close" class="ceic-lb-close" type="button" aria-label="Cerrar visor">CERRAR ✕</button>
+</div>

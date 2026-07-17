@@ -1,0 +1,55 @@
+---
+/**
+ * TEXTO REAL, verbatim, tomado de la home del sitio de CEIC
+ * (bloques bajo "Proyectos Cinematográficos Innovadores").
+ */
+const pilares = [
+  {
+    k: 'A —',
+    t: 'Producción de Cortometrajes',
+    d: 'Explora nuestros proyectos destacados, donde estudiantes y maestros colaboran para crear cortometrajes únicos que reflejan la creatividad y el talento de nuestra comunidad cinematográfica.',
+  },
+  {
+    k: 'B —',
+    t: 'Desarrollo de Talento',
+    d: 'Ofrecemos un espacio para que los estudiantes desarrollen sus habilidades a través de proyectos prácticos, permitiéndoles aprender y crecer en un entorno profesional y colaborativo.',
+  },
+  {
+    k: 'C —',
+    t: 'Cine Experimental Avanzado',
+    d: 'Fomentamos la innovación en el cine a través de proyectos experimentales que desafían las convenciones y exploran nuevas narrativas, brindando a nuestros estudiantes la oportunidad de expresarse creativamente.',
+  },
+  {
+    k: 'D —',
+    t: 'Colaboraciones Creativas',
+    d: 'Promovemos la colaboración entre estudiantes y profesionales de la industria, creando proyectos que integran diversas perspectivas y habilidades, enriqueciendo así el proceso de aprendizaje y la producción cinematográfica.',
+  },
+];
+---
+
+<section id="somos" data-theme="light" style="background:#f4efe6;color:#1a1714;padding:clamp(80px,12vh,150px) clamp(24px,7vw,110px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <div data-reveal style="display:flex;align-items:baseline;gap:20px;margin-bottom:54px">
+      <span style="font-family:'Bodoni Moda',serif;font-size:clamp(40px,6vw,84px);font-weight:400;color:rgba(26,23,20,.14);line-height:.8">01</span>
+      <span style="font-family:'Space Mono',monospace;font-size:18px;letter-spacing:.22em;text-transform:uppercase;color:#b07d2a">La escuela</span>
+    </div>
+    <div class="ceic-somos-grid" style="display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,6vw,90px);align-items:start">
+      <h2 data-reveal style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(30px,4.2vw,58px);line-height:1.08;margin:0;letter-spacing:-.01em">Un centro donde la teoría se rueda: <em style="color:#b07d2a">se estudia, se investiga y se produce</em> cine.</h2>
+      <div data-reveal style="align-self:end">
+        <p style="font-size:clamp(15px,1.3vw,18px);line-height:1.7;color:rgba(26,23,20,.72);margin:0 0 22px;font-weight:300">Bienvenidos al Centro de Estudios e Investigación Cinematográfica, donde ofrecemos cursos y diplomados para formar a los futuros cineastas y profesionales del cine. Así como el servicio profesional para producciones cinematográficas.</p>
+        <a href="#cursos" style="font-family:'Space Mono',monospace;font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:#1a1714;border-bottom:1px solid #d8a24a;padding-bottom:4px">Ver cursos →</a>
+      </div>
+    </div>
+    <div class="ceic-pillars" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(26,23,20,.14);margin-top:clamp(50px,8vh,90px);border:1px solid rgba(26,23,20,.14)">
+      {
+        pilares.map((p) => (
+          <div data-reveal style="background:#f4efe6;padding:38px 30px">
+            <div style="font-family:'Space Mono',monospace;font-size:16px;color:#b07d2a;letter-spacing:.2em;margin-bottom:18px">{p.k}</div>
+            <h3 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:26px;margin:0 0 12px">{p.t}</h3>
+            <p style="font-size:20px;line-height:1.6;color:rgba(26,23,20,.68);margin:0;font-weight:300">{p.d}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,80 @@
+/* ===========================================================================
+   Estilos globales base del sitio CEIC.
+   Los estilos específicos del diseño (secciones, animaciones cinematográficas)
+   se migrarán aquí desde index.html cuando hagamos el port.
+   =========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Todo salto a un ancla (nav, menú móvil, CTA del hero, barra inferior) aterriza
+   por debajo de la barra fija superior, no tapado por ella. La sección tiene
+   padding de sobra, así que el texto nunca se ocultaba; esto solo encuadra
+   mejor el borde. +8px de aire. */
+html {
+  scroll-padding-top: calc(var(--ceic-bar-h, 74px) + 8px);
+}
+
+/* Cursor por defecto (flecha estándar) tintado de dorado en todo el sitio.
+   Se usa un PNG porque Chrome no soporta cursores en formato SVG.
+   Las manitas de enlaces/botones conservan su cursor pointer normal. */
+html {
+  cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACBUlEQVR4AeyVP08CMRjG3zswFqKJxsHEMMDk7J/JCRI38TtIorLr5gKTo6uBxfAVhF0SEyaNo3EREhN1MWxwJuLZh6SkMXellJ4uXHhypeX6/O7p2+LSP18zgNAEGGPpv1idQABunnUdaieT7CpqiECAkalPB4sLiRcOFFkaSoCt9WUaDPzUXNy5jQpCCVDcS1P1ZGMEkWSsNErHUkMJAI9tnkLjfIdWl+ZTsbhzaBtiLAAg1lYYVU83hxDkUNkmhBaADFHMZwgQiQS7IQuXNgC8kERxP0OAcIiyNnbIRACAgASEjR1iBCAgUJwCwrQujAEAgSUBBHYI6sIEYioAAYEdgkPLBMIYoFJvk1C99UZIAwIEihNwOpoI4PXDG85599SlSoMDSAKEGEdd6B7d2gBHFw+UP2sRjHA6DiPnON8+ZX6r1/ccz/M6fHjsRwsA5vf8rTHb5fXzF+74n8DddakEM1no19VYAGHuEzUdnwrv3c+4nELMdXZ146aASwlQrj0S3hzm/b6XG3AItOUUsN5IIWBurS4lAIoKhjDHbIjZ9almMwUlgGwOAMh2CmEAHV7ZOfHmMBaSUyjxJTrmu0OMmdwDAWDC1QybUKSAYkRKHDbT63mFsN+r+gMBVA9gjMN1fL4jYIyU8B39JjICgBFMIbSnkTHANKbyszOAyBOQ4w5q/wAAAP//wTtuxgAAAAZJREFUAwD52ARQwZHCOwAAAABJRU5ErkJggg==") 6 4, auto;
+}
+
+body {
+  background: #0d0c0b;
+  color: #f4efe6;
+  font-family: 'Archivo', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* Bodoni Moda es una fuente con eje óptico; sin esto los títulos grandes
+     se adelgazan. Igual que en el diseño original de Claude Design. */
+  font-optical-sizing: none;
+}
+
+/* Refuerzo explícito en todo el texto por si algún UA-style lo resetea */
+h1,
+h2,
+h3,
+h4,
+p,
+span,
+a,
+em,
+strong,
+li,
+blockquote {
+  font-optical-sizing: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: #d8a24a;
+  text-decoration: none;
+}
+
+::selection {
+  background: #d8a24a;
+  color: #0d0c0b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
